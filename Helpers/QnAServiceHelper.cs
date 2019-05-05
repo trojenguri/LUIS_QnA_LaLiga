@@ -18,9 +18,10 @@ namespace Microsoft.BotBuilderSamples
         private QnAMakerOptions _options;
         private HttpClient _httpClient;
 
-        public QnAServiceHelper()
+        public QnAServiceHelper(QnAMakerEndpoint endpoint)
         {
             this._httpClient = new HttpClient();
+            this._endpoint = endpoint;
             this.InitQnAService();
         }
 
@@ -62,12 +63,12 @@ namespace Microsoft.BotBuilderSamples
                 Top = 3,
             };
 
-            this._endpoint = new QnAMakerEndpoint
+            /*this._endpoint = new QnAMakerEndpoint
             {
                 KnowledgeBaseId = "c25afea7-0ca0-44e7-a630-cce73b121087",
                 EndpointKey = "d3e7780b-fa03-4366-ab55-eaed70e97de4",
                 Host = "https://rokulka-test.azurewebsites.net/qnamaker",
-            };
+            };*/
         }
     }
 }

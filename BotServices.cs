@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Configuration;
 
 namespace Microsoft.BotBuilderSamples
@@ -42,6 +43,23 @@ namespace Microsoft.BotBuilderSamples
                             this.LuisServices.Add(luis.Name, recognizer);
                             break;
                         }
+
+                    case ServiceTypes.QnA:
+                        {
+                            var qna = (QnAMakerService)service;
+                            if (qna == null)
+                            {
+                                throw new InvalidOperationException("The QnA service is not configured correctly in your '.bot' file.");
+                            }
+
+                            this.QnaEndpoint = new QnAMakerEndpoint
+                            {
+                                KnowledgeBaseId = qna.KbId,
+                                EndpointKey = qna.EndpointKey,
+                                Host = qna.Hostname
+                            };
+                            break;
+                        }
                 }
             }
         }
@@ -57,5 +75,10 @@ namespace Microsoft.BotBuilderSamples
         /// A <see cref="LuisRecognizer"/> client instance created based on configuration in the .bot file.
         /// </value>
         public Dictionary<string, LuisRecognizer> LuisServices { get; } = new Dictionary<string, LuisRecognizer>();
+
+        /// <summary>
+        /// Get QnA Maker endpoint details
+        /// </summary>
+        public QnAMakerEndpoint QnaEndpoint { get; set; }
     }
 }
